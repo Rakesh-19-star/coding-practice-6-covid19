@@ -89,13 +89,13 @@ app.post('/districts/', async (request, response) => {
 
 //get district by ID
 app.get('/districts/:districtsId/', async (request, response) => {
-  const {districtsID} = request.params
+  const {districtsId} = request.params
   const getdistrictsIDByIdQuery = `
     select 
     *
     from 
     district
-    WHERE district_id=${districtsID}
+    WHERE district_id=${districtsId}
   `
   const district = await db.get(getdistrictsIDByIdQuery)
   response.send(dbObjectToDistrictResobj(district))
@@ -103,19 +103,19 @@ app.get('/districts/:districtsId/', async (request, response) => {
 
 //deleting a district
 app.delete('/districts/:districtsId/', async (request, response) => {
-  const {districtsID} = request.params
+  const {districtsId} = request.params
   const deletedistrictsIDByIdQuery = `
     DELETE
     from 
     district
-    where district_id=${districtsID}
+    where district_id=${districtsId}
   `
   await db.run(deletedistrictsIDByIdQuery)
   response.send('District Removed')
 })
 
 app.put('/districts/:districtsId/', async (request, response) => {
-  const {districtsID} = request.params
+  const {districtsId} = request.params
   const {districtName, stateId, cases, cured, active, deaths} = request.body
   const updateQueryofDistrict = `
     UPDATE district
@@ -126,7 +126,7 @@ app.put('/districts/:districtsId/', async (request, response) => {
     cured=${cured},
     active=${active},
     deaths=${deaths}
-    WHERE district_id=${districtsID}
+    WHERE district_id=${districtsId}
   `
   await db.run(updateQueryofDistrict)
   response.send('District Details Updated')
